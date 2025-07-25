@@ -52,7 +52,7 @@ const PRICING_PLANS = {
   },
   elite: {
     name: "Elite", 
-    price: 39.99,
+    price: 30.00,
     period: "per month",
     description: "Premium + personal coaching",
     features: [
@@ -66,7 +66,7 @@ const PRICING_PLANS = {
     buttonText: "Upgrade to Elite",
     buttonVariant: "default" as const,
     popular: false,
-    trial: "7 days free, then $39.99/month"
+    trial: "7 days free, then $30.00/month"
   }
 };
 
@@ -174,9 +174,15 @@ export default function Subscribe() {
 
   const handlePlanSelect = (planKey: string) => {
     const plan = PRICING_PLANS[planKey as keyof typeof PRICING_PLANS];
-    if (plan.priceId) {
+    if (plan.priceId && plan.priceId !== "price_premium" && plan.priceId !== "price_elite") {
       setSelectedPlan(planKey);
       createSubscriptionMutation.mutate(plan.priceId);
+    } else {
+      toast({
+        title: "Coming Soon",
+        description: "Subscription plans will be available after you set up your Stripe product prices.",
+        variant: "default",
+      });
     }
   };
 
