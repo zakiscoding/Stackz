@@ -1,0 +1,170 @@
+**StackzFit AI - Ultimate Cross-Platform Fitness App Prompt (Mobile + Web, JavaScript + Apple Design)**
+
+### 🌟 Overview
+
+Design and build a high-performance, mobile-first fitness and nutrition application called **StackzFit AI**. The app must be optimized for both **web (PWA)** and **iOS-style mobile UI**, using a **unified JavaScript codebase**.
+
+* **Target Users:** Gen Z and young adults
+* **Visual Theme:** Jet black background, electric blue accents, bold white typography
+* **Tone:** Motivational, athletic, empowering
+* **Architecture:** React frontend (with PWA support) + Express backend + Gemini API + Supabase DB + Stripe + ShadCN UI
+
+---
+
+### 🎨 Visual + UX Design Goals
+
+* Black + electric blue color scheme
+* Apple iOS-style navigation, modals, cards, and spacing
+* Swipe-friendly onboarding, tap-friendly actions
+* Gamified streaks, XP, and confetti for milestones
+* ShadCN UI component library for modern UI
+* Installable as a **PWA** for cross-platform use
+
+---
+
+### 📚 Core App Features
+
+1. **Welcome & Onboarding**
+
+   * Screen-by-screen swipe intro with slogan: “Train Smarter. Eat Better. Transform Faster.”
+   * Capture: goal (bulk/cut/maintain), experience level, training days, gender, weight, dietary preference
+   * Progress dots at bottom
+   * Save data to Supabase via backend
+
+2. **Home Dashboard**
+
+   * Welcome message
+   * Cards for: Today’s Workout, Today’s Meals, Weight Progress
+   * Button: "Regenerate Plan" (calls Gemini)
+   * Swipeable ring charts, progress graphs
+
+3. **Workout Generator (AI)**
+
+   * Weekly split from Gemini (push/pull/legs, etc.)
+   * Exercises listed with muscle group, reps, sets, difficulty
+   * Swap options per exercise
+   * Track set completion, log history
+
+4. **Meal Generator (AI)**
+
+   * Full meal plan (B/L/D/Snacks) from Gemini
+   * Includes macros, dietary filters
+   * View as daily plan or grocery list
+   * Regenerate meals
+
+5. **Progress Tracker**
+
+   * Daily: weight, meal compliance, workout status
+   * Weekly: animated graphs of weight, progress %, AI insights
+
+6. **Subscription Paywall**
+
+   * Free: limited plans
+   * Premium (\$14.99): full AI + tracking + support
+   * Elite (\$39.99): Zoom coaching, early access, VIP perks
+   * Stripe Checkout integration + pricing switcher
+
+7. **Settings/Profile**
+
+   * Edit: goals, preferences, metrics
+   * Manage subscription
+   * Export logs, delete account
+
+---
+
+### 👨‍📈 Smart Features
+
+* Gemini-powered AI chat assistant
+* Voice playback of AI responses (TTS)
+* Push Notifications (via Firebase/Expo):
+
+  * Daily workout/meal reminders
+  * Streak alerts, AI tips
+* Analytics via PostHog or Mixpanel
+* Offline caching for meal/workout plans (PWA support)
+* i18n-ready for language expansion
+
+---
+
+### 🚀 Tech Stack
+
+* **Frontend:** React, TailwindCSS, ShadCN UI (with Radix UI)
+* **Backend:** Node.js + Express
+* **AI:** Gemini API
+* **DB/Auth:** Supabase
+* **Payments:** Stripe
+* **Notifications:** Firebase Cloud Messaging (FCM)
+* **PWA:** manifest.json, service worker, install prompt
+* **Voice:** Gemini or ElevenLabs TTS API
+
+---
+
+### 📂 Project Structure (With File Descriptions)
+
+```
+stackzfit-ai/
+├── docker-compose.yml          # Spins up frontend/backend in containers
+├── Dockerfile                  # Container build for Node.js app
+├── .env                        # Environment variables loaded from /api/keys.js
+├── README.md                   # Project overview and setup instructions
+
+├── frontend/
+│   ├── public/                 # Static assets (logo, manifest.json, icons, fonts)
+│   ├── views/                  # EJS templates or React static HTML exports
+│   ├── components/             # ShadCN UI components (Button, Card, Dialog, Modal, Tabs)
+│   ├── pages/                  # Page-level React components (Home.jsx, Onboarding.jsx, Plans.jsx)
+│   ├── routes/                 # Frontend routes (index.js defines routing logic)
+│   ├── utils/                  # Frontend helper functions (formatting, unit conversion)
+│   ├── manifest.json           # Enables PWA functionality (install, theme-color, icons)
+│   └── app.js                  # Express server (only for SSR or view rendering)
+
+├── backend/
+│   ├── app.js                  # Main Express server file, connects routes & middleware
+│   ├── routes/
+│   │   ├── user.js             # Endpoints: login, register, get/update user
+│   │   ├── plans.js            # Endpoints: generate workout/meal plans via Gemini
+│   │   └── payments.js         # Endpoints: Stripe checkout + webhook handling
+│   ├── controllers/
+│   │   ├── userController.js   # Logic for user auth and profile management
+│   │   ├── planController.js   # Logic to call Gemini and return structured plans
+│   │   └── paymentController.js# Stripe webhook validation and DB update
+│   ├── services/
+│   │   ├── geminiService.js    # Function to prompt Gemini API and clean responses
+│   │   ├── workoutService.js   # Logic to structure returned workout JSON
+│   │   └── mealService.js      # Logic to structure meal plans + grocery lists
+│   ├── database/
+│   │   └── supabaseClient.js   # Supabase SDK setup and functions
+│   └── utils/
+│       └── auth.js             # JWT middleware to protect API routes
+
+├── api/
+│   ├── keys.js                 # 🔑 Paste all API keys here as config object
+│   │                           # export default {
+│   │                           #   GEMINI_API_KEY: "...",
+│   │                           #   SUPABASE_URL: "...",
+│   │                           #   SUPABASE_SERVICE_ROLE_KEY: "...",
+│   │                           #   STRIPE_SECRET_KEY: "...",
+│   │                           #   STRIPE_WEBHOOK_SECRET: "..."
+│   │                           # }
+│   └── config.js               # Axios setup, base URLs, timeout settings
+
+├── mobile/                     # Optional: wrap web into Expo for native feel
+│   └── expo.config.js          # Expo wrapper for App Store delivery (if needed)
+```
+
+---
+
+### 🛌 Deliverables
+
+* All core screens built with ShadCN components
+* Unified React codebase (PWA + iOS-style layout)
+* Full mobile/web responsiveness
+* PWA installable icon, manifest, offline caching
+* Gemini-powered AI for plans, chat, and voice
+* Supabase integration for users, plans, tracking
+* Stripe checkout & webhook integration
+* Push notifications (Firebase/Expo)
+* API key config via `api/keys.js`
+* README setup instructions with CLI + Docker usage
+
+Let me know if you want Figma mockups, Gemini prompt templates, or Supabase schema samples next!
